@@ -116,6 +116,27 @@ impl SemaphoreVerifier {
         (result_x, result_y)
     }
 
+    // Function to perform pairing operations
+    fn pairing_check(
+        a: (BigUint, BigUint),
+        b: ((BigUint, BigUint), (BigUint, BigUint)),
+        c: (BigUint, BigUint),
+        vk_points: StdVec<BigUint>,
+        pub_signals: Vec<u64>, 
+    ) -> bool {
+        let (_, q) = get_constants();
+        let mut result = BigUint::from(1u32);
+        for (vk_point, pub_signal) in vk_points.iter().zip(pub_signals.iter()) {
+            let (temp_x, temp_y) = Self::g1_point_multiplication(a.0.clone(), a.1.clone(), vk_point.clone());
+            let (temp_x2, temp_y2) = Self::g1_point_multiplication(b.0.0.clone(), b.0.1.clone(), BigUint::from(pub_signal));
+            let (temp_x3, temp_y3) = Self::g1_point_multiplication(b.1.0.clone(), b.1.1.clone(), BigUint::from(pub_signal));
+            let (temp_x4, temp_y4) = Self::g1_point_multiplication(c.0.clone(), c.1.clone(), vk_point.clone());
+            let temp_result = (temp_x * temp_y2 * temp_y3 * temp_y4) % &q;
+            result = (result * temp_result) % &q;
+        }
+        result == BigUint::from(1u32)
+    }
+
     
 
 
