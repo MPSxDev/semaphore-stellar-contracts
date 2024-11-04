@@ -12,3 +12,25 @@ fn get_constants() -> (BigUint, BigUint) {
     let q = BigUint::parse_bytes(b"21888242871839275222246405745257275088696311157297823662689037894645226208583", 10).unwrap();
     (r, q)
 }
+
+// Verification Key data structure
+#[derive(Clone)]
+pub struct VerificationKey {
+    alpha_x: BigUint,
+    alpha_y: BigUint,
+    beta_x1: BigUint,
+    beta_x2: BigUint,
+    beta_y1: BigUint,
+    beta_y2: BigUint,
+    gamma_x1: BigUint,
+    gamma_x2: BigUint,
+    gamma_y1: BigUint,
+    gamma_y2: BigUint,
+}
+
+#[derive(Clone)]
+pub struct ProofPoints {
+    pub a: (BigUint, BigUint),
+    pub b: ((BigUint, BigUint), (BigUint, BigUint)),
+    pub c: (BigUint, BigUint),
+}
