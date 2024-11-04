@@ -58,4 +58,26 @@ pub struct SemaphoreVerifier;
 #[contractimpl]
 impl SemaphoreVerifier {
 
+    pub fn verify_proof(
+        env: Env,
+        proof: ProofPoints,
+        pub_signals: Vec<u64>, // Use soroban_sdk::Vec
+        merkle_tree_depth: u32,
+    ) -> bool {
+        let (r, q) = get_constants();
+
+        // Verify field elements are valid
+        for signal in pub_signals.iter() {
+            if BigUint::from(signal) >= r {
+                return false;
+            }
+        }
+
+        // Retrieve verification key points based on tree depth
+        let vk_points = Self::get_verification_key_points(merkle_tree_depth);
+
+        // Perform the pairing check
+        Self::pairing_check(proof.a, proof.b, proof.c, vk_points, pub_signals)
+    }
+
 }
