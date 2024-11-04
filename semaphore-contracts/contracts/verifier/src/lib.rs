@@ -80,4 +80,14 @@ impl SemaphoreVerifier {
         Self::pairing_check(proof.a, proof.b, proof.c, vk_points, pub_signals)
     }
 
+    // Helper function to check if a point is on curve
+    fn is_on_curve(x: BigUint, y: BigUint) -> bool {
+        let (_, q) = get_constants();
+        let y_squared = y.pow(2);
+        let x_cubed = x.pow(3);
+        let three = BigUint::from(3u32);
+        let result = (y_squared - (x_cubed + three)) % &q;
+        result.is_zero()
+    }
+
 }
