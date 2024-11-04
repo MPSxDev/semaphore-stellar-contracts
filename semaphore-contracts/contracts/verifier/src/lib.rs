@@ -90,4 +90,14 @@ impl SemaphoreVerifier {
         result.is_zero()
     }
 
+    // Function to retrieve verification key points based on tree depth
+    fn get_verification_key_points(depth: u32) -> StdVec<BigUint> {
+        let mut vk_points = StdVec::new();
+        for i in 0..depth {
+            let vk_point = BigUint::from(i); 
+            vk_points.push(vk_point);
+        }
+        vk_points
+    }    
+
 }
