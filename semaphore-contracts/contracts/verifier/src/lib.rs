@@ -34,3 +34,20 @@ pub struct ProofPoints {
     pub b: ((BigUint, BigUint), (BigUint, BigUint)),
     pub c: (BigUint, BigUint),
 }
+
+// Implement necessary traits for ProofPoints
+impl IntoVal<Env, soroban_sdk::Val> for ProofPoints {
+    fn into_val(&self, env: &Env) -> soroban_sdk::Val {
+
+        unimplemented!()
+    }
+}
+
+impl TryFromVal<Env, soroban_sdk::Val> for ProofPoints {
+    type Error = soroban_sdk::Error; 
+
+    fn try_from_val(env: &Env, val: &soroban_sdk::Val) -> Result<Self, Self::Error> {
+
+        unimplemented!()
+    }
+}
