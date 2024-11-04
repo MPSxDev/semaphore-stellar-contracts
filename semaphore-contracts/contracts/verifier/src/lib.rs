@@ -51,3 +51,11 @@ impl TryFromVal<Env, soroban_sdk::Val> for ProofPoints {
         unimplemented!()
     }
 }
+
+#[contract]
+pub struct SemaphoreVerifier;
+
+#[contractimpl]
+impl SemaphoreVerifier {
+
+}
