@@ -98,6 +98,25 @@ impl SemaphoreVerifier {
             vk_points.push(vk_point);
         }
         vk_points
-    }    
+    }   
+    
+    // Function to perform G1 point multiplication
+    fn g1_point_multiplication(x: BigUint, y: BigUint, scalar: BigUint) -> (BigUint, BigUint) {
+        let (_, q) = get_constants();
+        let mut result_x = x.clone();
+        let mut result_y = y.clone();
+        for bit in scalar.to_bytes_le().iter().rev() {
+            result_x = (&result_x * &result_x) % &q;
+            result_y = (&result_y * &result_x * 2u32) % &q;
+            if *bit & 0x01 == 1 {
+                result_x = (&result_x * &x) % &q;
+                result_y = (&result_y * &y) % &q;
+            }
+        }
+        (result_x, result_y)
+    }
+
+    
+
 
 }
